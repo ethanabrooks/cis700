@@ -10,6 +10,13 @@ sudo apt-get install ros-indigo-moveit-full
 sudo apt-get install ros-indigo-ur-kinematics
 sudo apt-get install ros-indigo-ur5-moveit-config
 sudo apt-get install ros-indigo-gazebo-ros
+sudo apt-get install ros-indigo-gazebo-ros-control
+sudo apt-get install ros-indigo-effort-controllers
+sudo apt-get install ros-indigo-joint-state-controller
+sudo apt-get install ros-indigo-joint-trajectory-controller
+sudo apt-get install ros-indigo-gazebo-ros-pkgs
+sudo apt-get install ros-indigo-ros-controllers
+sudo apt-get install ros-indigo-moveit-resources
 rosdep update
 ```
 
