@@ -9,6 +9,7 @@ First, install dependencies:
 sudo apt-get install ros-indigo-moveit-full
 sudo apt-get install ros-indigo-ur-kinematics
 sudo apt-get install ros-indigo-ur5-moveit-config
+sudo apt-get install ros-indigo-gazebo-ros
 ```
 
 To install the required repositories from Github, `cd` into the root directory of your workspace and
