@@ -6,18 +6,7 @@
 
 First, install dependencies:
 ```
-sudo apt-get install ros-indigo-moveit-full
-sudo apt-get install ros-indigo-ur-kinematics
-sudo apt-get install ros-indigo-ur5-moveit-config
-sudo apt-get install ros-indigo-gazebo-ros
-sudo apt-get install ros-indigo-gazebo-ros-control
-sudo apt-get install ros-indigo-effort-controllers
-sudo apt-get install ros-indigo-joint-state-controller
-sudo apt-get install ros-indigo-joint-trajectory-controller
-sudo apt-get install ros-indigo-gazebo-ros-pkgs
-sudo apt-get install ros-indigo-ros-controllers
-sudo apt-get install ros-indigo-moveit-resources
-rosdep update
+sudo apt-get install ros-indigo-moveit-full ros-indigo-ur-kinematics ros-indigo-ur5-moveit-config ros-indigo-gazebo-ros ros-indigo-gazebo-ros-control ros-indigo-effort-controllers ros-indigo-joint-state-controller ros-indigo-joint-trajectory-controller ros-indigo-gazebo-ros-pkgs ros-indigo-ros-controllers ros-indigo-moveit-resources rosdep update
 ```
 
 To install the required repositories from Github, `cd` into the root directory of your workspace and
@@ -48,6 +37,8 @@ This will run a small python script that takes user input joint angles and execu
 
 `rosrun ur_driver test_move.py`
 
+_unfortunately this is not currently working :(_
+
 ### Planning and executing random arm positions:
 
 With gazebo open in one terminal, we need to initialize MoveIt planning. To do so, open a second terminal and type:
@@ -64,12 +55,69 @@ If RViz displays "failed" under "Plan and Execute," you need to reset the arm. T
 
 Finally, if you did try to send the arm to a position that collides with the floor, the arm will try to execute in Gazebo but then flop around, causing Gazebo to become unresponsive. In this case, you need to restart Gazebo.
 
-# Setup kinect
-
+# Grasping
+## Setup kinect
 ```
-mkdir kinect
-cd kinect
-
+sudo apt-get install freeglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev doxygen graphviz mono-complete
+```
+Create a `kinect` folder in your home directory to store installation source of drivers:
+```
+mkdir -p ~/kinect
+cd ~/kinect
+```
+Download from the OpenNI modules. Make sure you get the `unstable` branch:
+```
+git clone https://github.com/OpenNI/OpenNI.git
+cd OpenNI
+git checkout unstable
+cd Platform/Linux/CreateRedist
+./RedistMaker
+```
+If that succeeds, there a `Redist` folder should be created with an install script. Run it:
+```
+cd ~kinect/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x64-v1.5.8.5/
+sudo ./install.sh
+```
+Many blogs recommend installing from https://github.com/avin2/SensorKinect.git
+This didn't work for me, but the following the following repo from ph4m worked:
+```
+cd ~/kinect
+git clone https://github.com/ph4m/SensorKinect.git
+git checkout unstable
+```
+Install it
+```
+cd SensorKinect/Platform/Linux/CreateRedist
+./RedistMaker
+```
+If that succeeds, there a `Redist` folder should be created with an install script. Run it:
+```
+cd ~/kinect/SensorKinect/Platform/Linux/Redist/Sensor-Bin-Linux-x64-v5.1.2.1/
+sudo ./install.sh
+```
+## Install agile_grasp
+`cd` to your catkin workspace.
+```
+cd src/
+git clone https://github.com/atenpas/agile_grasp
+cd ..
+catkin_make
+```
+Make sure this previous command succeeded. The percentage should go to 100%.
+Next, start publishing data from the Kinect:
+```
+roslaunch openni_launch openni.launch
+```
+Now we are ready to run `agile_grasp`:
+```
+roslaunch agile_grap single_camera_grasps.launch
+```
+To visualize the grasp points, open rviz:
+```
+rosrun rviz rviz
+```
+Type ctrl+O and select `agile_grasp/rviz/single_camera.rviz`.
+You should see a camera image from the Kinect and little bristly looking things representing grasp points should start popping up all over the place.
 
 # The process for our arm electronics design
 
