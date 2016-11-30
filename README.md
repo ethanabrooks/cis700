@@ -64,6 +64,13 @@ If RViz displays "failed" under "Plan and Execute," you need to reset the arm. T
 
 Finally, if you did try to send the arm to a position that collides with the floor, the arm will try to execute in Gazebo but then flop around, causing Gazebo to become unresponsive. In this case, you need to restart Gazebo.
 
+# Setup kinect
+
+```
+mkdir kinect
+cd kinect
+
+
 # The process for our arm electronics design
 
 Initial investigation went to building an Arduino module to control the arm as per this demo: http://robottini.altervista.org/dynamixel-ax-12a-and-arduino-how-to-use-the-serial-port
