@@ -39,6 +39,8 @@ This will run a small python script that takes user input joint angles and execu
 
 _unfortunately this is not currently working :(_
 
+_Brian, checkout http://docs.ros.org/hydro/api/pr2_moveit_tutorials/html/planning/scripts/doc/move_group_python_interface_tutorial.html_
+
 ### Planning and executing random arm positions:
 
 With gazebo open in one terminal, we need to initialize MoveIt planning. To do so, open a second terminal and type:
