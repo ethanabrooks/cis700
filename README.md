@@ -68,13 +68,13 @@ Finally, if you did try to send the arm to a position that collides with the flo
 If ros cannot open the serial controller, make sure that the current user has ownership:
 `sudo chown host /dev/ttyUSB0`
 
-Conversion from encoders to degrees:
-Motor 1: 
-  1500 = 90 degrees (fully extended)
-  3000 = 180 degrees (straight up)
-Motor 2: 
-  205 = 90 degrees (rotate left)
-  820 = 270 degrees (rotate right)
+Conversion from encoders to degrees:  
+Motor 1:  
+  1500 = 90 degrees (fully extended)  
+  3000 = 180 degrees (straight up)  
+Motor 2:  
+  205 = 90 degrees (rotate left)  
+  820 = 270 degrees (rotate right)  
 
 To subscribe to the ur5 motion planner and send motor commands:
 `roslaunch move_arm follow_arm.launch`
