@@ -64,7 +64,6 @@ If RViz displays "failed" under "Plan and Execute," you need to reset the arm. T
 
 Finally, if you did try to send the arm to a position that collides with the floor, the arm will try to execute in Gazebo but then flop around, causing Gazebo to become unresponsive. In this case, you need to restart Gazebo.
 
-<<<<<<< HEAD
 # Motor config
 If ros cannot open the serial controller, make sure that the current user has ownership:
 `sudo chown host /dev/ttyUSB0`
@@ -86,7 +85,6 @@ To subscribe to the ur5 motion planner and send motor commands:
 =======
 # Grasping
 ## Setup kinect
->>>>>>> d48a3d5bf56373571f507d66b7839d5ba4222bd7
 ```
 sudo apt-get install freeglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev doxygen graphviz mono-complete
 ```
