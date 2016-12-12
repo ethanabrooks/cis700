@@ -49,7 +49,6 @@ This will run a small python script that takes user input joint angles and execu
 `rosrun ur_driver test_move.py`
 
 ### Planning and executing random arm positions:
-
 With gazebo open in one terminal, we need to initialize MoveIt planning. To do so, open a second terminal and type:
 
 `roslaunch ur5_moveit_config ur5_moveit_planning_execution.launch sim:=true limited:=true`
@@ -63,6 +62,22 @@ This will open a GUI also displaying the UR5 arm. On the lower left, in the "Mot
 If RViz displays "failed" under "Plan and Execute," you need to reset the arm. To do so, click "Select Start State" (above "Select Goal State"), select "<same as goal>" from the drop-down, and click "update." Then click "Plan and Execute." If this does not work, just quit and restart RViz.
 
 Finally, if you did try to send the arm to a position that collides with the floor, the arm will try to execute in Gazebo but then flop around, causing Gazebo to become unresponsive. In this case, you need to restart Gazebo.
+
+# Motor config
+If ros cannot open the serial controller, make sure that the current user has ownership:
+`sudo chown host /dev/ttyUSB0`
+
+Conversion from encoders to degrees:
+Motor 1: 
+  1500 = 90 degrees (fully extended)
+  3000 = 180 degrees (straight up)
+Motor 2: 
+  205 = 90 degrees (rotate left)
+  820 = 270 degrees (rotate right)
+
+To subscribe to the ur5 motion planner and send motor commands:
+`roslaunch move_arm follow_arm.launch`
+
 
 # Setup kinect
 
