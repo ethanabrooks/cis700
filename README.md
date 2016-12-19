@@ -48,6 +48,8 @@ This will run a small python script that takes user input joint angles and execu
 
 `rosrun ur_driver test_move.py`
 
+To have dynamixel servos follow the joint state topic:
+`roslaunch move_arm follow_arm.launch`
 
 ### Planning and executing random arm positions:
 With gazebo open in one terminal, we need to initialize MoveIt planning. To do so, open a second terminal and type:
@@ -146,6 +148,27 @@ rosrun rviz rviz
 ```
 Type ctrl+O and select `agile_grasp/rviz/single_camera.rviz`.
 You should see a camera image from the Kinect and little bristly looking things representing grasp points should start popping up all over the place.
+
+## Moving arm to end-effector position
+
+Start `roscore` and load the ur5 robot description by running
+```
+roslaunch ur_gazebo ur5.launch limited:=true
+```
+Next turn on the servos and begin listening to joint states by running
+```
+roslaunch move_arm follow_arm.launch
+```
+To start MoveIt, which performs planning and inverse kinematics, run
+```
+roslaunch ur5_moveit_config ur5_moveit_planning_execution.launch sim:=true
+```
+Finally, to run the `plan_trajectory` script, run
+```
+ rosrun move_arm plan_trajectory.py
+ ```
+
+Note that the end-effector position is hard-coded in the file. Feel free to change it although unreachable positions may cause problems.
 
 # The process for our arm electronics design
 

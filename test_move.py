@@ -46,15 +46,20 @@ def move_disordered(Q1, Q2, Q3):
         JointTrajectoryPoint(positions=q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))]
     client.send_goal(g)
     client.wait_for_result()
-    
+
 def move_repeated(Q1, Q2, Q3):
     g = FollowJointTrajectoryGoal()
     g.trajectory = JointTrajectory()
     g.trajectory.joint_names = JOINT_NAMES
-    
+
     d = 2.0
     g.trajectory.points = []
-    for i in range(10):
+
+    print(Q1)
+    print(Q2)
+    print(Q3)
+
+    while (True):
         g.trajectory.points.append(
             JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(d)))
         d += 1
@@ -79,7 +84,7 @@ def move_interrupt(Q1, Q2, Q3):
         JointTrajectoryPoint(positions=Q1, velocities=[0]*6, time_from_start=rospy.Duration(2.0)),
         JointTrajectoryPoint(positions=Q2, velocities=[0]*6, time_from_start=rospy.Duration(3.0)),
         JointTrajectoryPoint(positions=Q3, velocities=[0]*6, time_from_start=rospy.Duration(4.0))]
-    
+
     client.send_goal(g)
     time.sleep(2.0)
     print("Interrupting")
@@ -111,9 +116,12 @@ def main():
     global client
     try:
 
-        # Q1 = [2.2,0,-1.57,0,0,0]
-        # Q2 = [1.5,0,-1.57,0,0,0]
-        # Q3 = [1.5,-0.2,-1.57,0,0,0]
+        Q1 = [2.2,0,-1.57,0,0,0]
+        Q2 = [0.5,0,-1.57,0,0,0]
+        Q3 = [0.5, 1.0,-1.57,0,0,0]
+        Q1 = [0.0]*6
+        Q2 = [0.0]*6
+        Q3 = [0.0]*6
 
         angles = []
         for i in range(NUM_TRAJECTORY_POINTS):
@@ -126,7 +134,7 @@ def main():
         client.wait_for_server()
         print("Connected to server")
         #move1(*angles)
-        move_repeated(*angles)
+        move_repeated(Q1, Q2, Q3)
         #move_disordered(*angles)
         #move_interrupt(*angles)
     except KeyboardInterrupt:
