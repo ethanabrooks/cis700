@@ -150,23 +150,34 @@ Type ctrl+O and select `agile_grasp/rviz/single_camera.rviz`.
 You should see a camera image from the Kinect and little bristly looking things representing grasp points should start popping up all over the place.
 
 ## Moving arm to end-effector position
-
-Start `roscore` and load the ur5 robot description by running
+In order to enable writing to the USB port, run
+```
+sudo chown host /dev/ttyUSB0
+```
+This may not be the name for the USB port that your using, so you'll want to double check that.
+Next, start `roscore` and load the ur5 robot description by running
 ```
 roslaunch ur_gazebo ur5.launch limited:=true
 ```
-Next turn on the servos and begin listening to joint states by running
+Next, in a separate window, turn on the servos and begin listening to joint states by running
 ```
 roslaunch move_arm follow_arm.launch
 ```
-To start MoveIt, which performs planning and inverse kinematics, run
+To start MoveIt, which performs planning and inverse kinematics, in a separate window, run
 ```
 roslaunch ur5_moveit_config ur5_moveit_planning_execution.launch sim:=true
 ```
-Finally, to run the `plan_trajectory` script, run
+Finally, to run the `plan_trajectory` script, in a seaparate window, run
 ```
  rosrun move_arm plan_trajectory.py
  ```
+
+### Troubleshooting
+A good first step is to kill processes in all windows and restart them in the order listed in this document.
+
+If that doesn't work, especially if some of the motors are unresponsive, unplug and replug all motors.
+
+Finally, ensure that the 4-pin connector has 19V and the 3-pin connector has 12V with at least 2A.
 
 Note that the end-effector position is hard-coded in the file. Feel free to change it although unreachable positions may cause problems.
 
