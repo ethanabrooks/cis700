@@ -80,13 +80,29 @@ Motor 2:
 
 To subscribe to the ur5 motion planner and send motor commands:
 `roslaunch move_arm follow_arm.launch`
-
-
-# Setup kinect
-
 =======
 # Grasping
-## Setup kinect
+## Setup camera
+### Option 1: RealSense
+More detailed instructions can be found [here](http://wiki.ros.org/RealSense).
+First, you need to install `librealsense`. This process is described at this
+[website](http://wiki.ros.org/librealsense), but the instructions are reproduced
+here:
+```
+wget -O enable_kernel_sources.sh http://bit.ly/en_krnl_src
+bash ./enable_kernel_sources.s
+sudo apt-get --reinstall install 'ros-indigo-librealsense'
+```
+Next, install `realsense_camera`. Again, more detailed instructions can be found
+at [this site](http://wiki.ros.org/realsense_camera). Simply run
+```
+sudo apt-get install ros-indigo-realsense-camera
+```
+
+... this is where we gave up.
+
+
+### Option 2: Kinect
 ```
 sudo apt-get install freeglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev doxygen graphviz mono-complete
 ```
@@ -125,7 +141,8 @@ If that succeeds, there a `Redist` folder should be created with an install scri
 cd ~/kinect/SensorKinect/Platform/Linux/Redist/Sensor-Bin-Linux-x64-v5.1.2.1/
 sudo ./install.sh
 ```
-## Install agile_grasp
+
+## Agile_grasp
 `cd` to your catkin workspace.
 ```
 cd src/
@@ -140,7 +157,7 @@ roslaunch openni_launch openni.launch
 ```
 Now we are ready to run `agile_grasp`:
 ```
-roslaunch agile_grap single_camera_grasps.launch
+roslaunch agile_grasp single_camera_grasps.launch
 ```
 To visualize the grasp points, open rviz:
 ```
@@ -177,7 +194,22 @@ A good first step is to kill processes in all windows and restart them in the or
 
 If that doesn't work, especially if some of the motors are unresponsive, unplug and replug all motors.
 
-Finally, ensure that the 4-pin connector has 19V and the 3-pin connector has 12V with at least 2A.
+If you keep getting
+```
+[TxRxResult] There is no status packet!
+```
+Reenter
+``` 
+sudo chown host /dev/ttyUSB0
+```
+
+If the arm is behaving strangely, check the model as depicted in Gazebo. You may need to restart it by rerunning
+
+```
+roslaunch ur_gazebo ur5.launch limited:=true
+```
+
+Ensure that the 4-pin connector has 19V and the 3-pin connector has 12V with at least 2A.
 
 Note that the end-effector position is hard-coded in the file. Feel free to change it although unreachable positions may cause problems.
 
